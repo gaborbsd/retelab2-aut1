@@ -1,5 +1,7 @@
 # REST API fejlesztése Spring MVC technológiával
 
+## Heizer Levente - IT9P0Z
+
 ## A feladatok
 
 ### 1. feladat
