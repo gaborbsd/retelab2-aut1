@@ -7,9 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.NonTransientDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.Console;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -58,5 +60,12 @@ public class AdController {
             @PathVariable("tag") String tag
     ) {
         return adRepository.findByTag(tag);
+    }
+
+    @Scheduled(fixedDelay = 6000)
+    @DeleteMapping
+    public ResponseEntity<?> delete() {
+        adRepository.deleteAllExpiredAd(LocalDateTime.now());
+        return ResponseEntity.ok().build();
     }
 }
