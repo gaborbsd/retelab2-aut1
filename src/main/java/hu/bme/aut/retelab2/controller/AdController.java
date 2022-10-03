@@ -52,4 +52,11 @@ public class AdController {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.getLocalizedMessage());
         }
     }
+
+    @GetMapping("/{tag}")
+    public List<Ad> getByTag(
+            @PathVariable("tag") String tag
+    ) {
+        return adRepository.findByTag(tag);
+    }
 }
