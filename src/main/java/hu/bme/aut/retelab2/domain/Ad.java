@@ -30,6 +30,8 @@ public class Ad {
     @ElementCollection
     private List<String> tags = new ArrayList<>();
 
+    private LocalDateTime expirationDate;
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -61,4 +63,12 @@ public class Ad {
     public List<String> getTags() { return this.tags; }
 
     public void setTags(List<String> tags) { this.tags = tags; }
+
+    public LocalDateTime getExpirationDate() {
+        return expirationDate;
+    }
+
+    public void setExpirationDate(LocalDateTime expirationDate) {
+        this.expirationDate = expirationDate;
+    }
 }
