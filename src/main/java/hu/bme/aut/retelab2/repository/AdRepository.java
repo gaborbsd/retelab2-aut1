@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.List;
 
 @Repository
 public class AdRepository {
@@ -17,4 +18,8 @@ public class AdRepository {
     @Transactional
     public Ad save(Ad ad) { return em.merge(ad); }
 
+    public List<Ad> getByRange(Integer min, Integer max) {
+        String query = String.format("SELECT a FROM Ad a WHERE a.price >= %d AND a.price <= %d", min, max );
+        return em.createQuery(query, Ad.class).getResultList();
+    }
 }
