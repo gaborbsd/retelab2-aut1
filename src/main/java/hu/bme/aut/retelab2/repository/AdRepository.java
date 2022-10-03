@@ -3,12 +3,15 @@ package hu.bme.aut.retelab2.repository;
 
 import hu.bme.aut.retelab2.domain.Ad;
 import org.springframework.dao.NonTransientDataAccessException;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.PersistenceContext;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -43,5 +46,26 @@ public class AdRepository {
         List<Ad> resultList = em.createQuery("SELECT a FROM Ad a JOIN a.tags t WHERE t = LOWER(?1)", Ad.class).setParameter(1, tag).getResultList();
         for (Ad ad : resultList) ad.setSecretKey(null);
         return resultList;
+    }
+
+    @Transactional
+    public void deleteById(long id) {
+        Ad ad = findById(id);
+        em.remove(ad);
+    }
+
+    @Modifying
+    @Transactional
+    public void deleteAllExpiredAd(LocalDateTime now) {
+        List<Ad> ads = em.createQuery("SELECT a FROM Ad a").getResultList();
+        List<Ad> expiredAds = new ArrayList<Ad>();
+        for (Ad ad: ads) {
+            if (ad.getExpirationDate().isBefore(now)) {
+                expiredAds.add(ad);
+            }
+        }
+        for (Ad ad: expiredAds) {
+            deleteById(ad.getId());
+        }
     }
 }
