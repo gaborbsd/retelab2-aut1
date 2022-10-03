@@ -2,10 +2,13 @@ package hu.bme.aut.retelab2.domain;
 
 import org.springframework.data.annotation.CreatedDate;
 
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Ad {
@@ -23,6 +26,9 @@ public class Ad {
     private LocalDateTime createdDate = LocalDateTime.now();
 
     private String secretKey;
+
+    @ElementCollection
+    private List<String> tags = new ArrayList<>();
 
     public void setId(Long id) {
         this.id = id;
@@ -51,4 +57,8 @@ public class Ad {
     public void setSecretKey(String secretKey) { this.secretKey = secretKey; }
 
     public String getSecretKey() { return this.secretKey; }
+
+    public List<String> getTags() { return this.tags; }
+
+    public void setTags(List<String> tags) { this.tags = tags; }
 }
