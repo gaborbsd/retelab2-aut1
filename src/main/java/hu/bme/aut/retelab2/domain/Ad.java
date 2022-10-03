@@ -22,6 +22,8 @@ public class Ad {
     @CreatedDate
     private LocalDateTime createdDate = LocalDateTime.now();
 
+    private String secretKey;
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -45,4 +47,8 @@ public class Ad {
     public void setCreatedDate(LocalDateTime createdDate) { this.createdDate = createdDate; }
 
     public LocalDateTime getCreatedDate() { return this.createdDate; }
+
+    public void setSecretKey(String secretKey) { this.secretKey = secretKey; }
+
+    public String getSecretKey() { return this.secretKey; }
 }

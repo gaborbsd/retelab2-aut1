@@ -1,8 +1,12 @@
 package hu.bme.aut.retelab2.controller;
 
+import hu.bme.aut.retelab2.SecretGenerator;
 import hu.bme.aut.retelab2.domain.Ad;
 import hu.bme.aut.retelab2.repository.AdRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.NonTransientDataAccessException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.Console;
@@ -22,6 +26,7 @@ public class AdController {
 
     @PostMapping
     public Ad create(@RequestBody Ad ad) {
+        ad.setSecretKey(SecretGenerator.generate());
         return adRepository.save(ad);
     }
 
@@ -30,6 +35,21 @@ public class AdController {
         @RequestParam(required = false, defaultValue = "0") Integer min,
         @RequestParam(required = false, defaultValue = "10000000") Integer max
     ) {
-        return adRepository.getByRange(min, max);
+        List<Ad> queryResults = adRepository.getByRange(min, max);
+        for (Ad result:
+                queryResults) {
+            result.setSecretKey(null);
+        }
+        return queryResults;
+    }
+
+    @PutMapping
+    public ResponseEntity<Object> update(@RequestBody Ad ad) {
+        try {
+            Ad result = adRepository.update(ad);
+            return ResponseEntity.ok(result);
+        } catch(NonTransientDataAccessException e) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.getLocalizedMessage());
+        }
     }
 }
