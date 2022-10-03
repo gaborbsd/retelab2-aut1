@@ -1,0 +1,130 @@
+{
+	"info": {
+		"_postman_id": "2df7d3ce-a202-449a-ba2f-22802aba03b0",
+		"name": "Aut1Lab",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create request",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"address\": \"barszek.hu\",\n    \"description\" : \"Barszek\",\n    \"price\" : 5000,\n    \"tags\" : [\n        \"butor\",\n        \"szek\",\n        \"barszek\"\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/ads/create",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"ads",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Search request",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/ads/search?min=500&max=25000",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"ads",
+						"search"
+					],
+					"query": [
+						{
+							"key": "min",
+							"value": "500"
+						},
+						{
+							"key": "max",
+							"value": "25000"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update request ok",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\" : 2,\n    \"address\": \"barszek.hu\",\n    \"description\" : \"Barszek\",\n    \"price\" : 5000,\n    \"tags\" : [\n        \"butor\",\n        \"szek\",\n        \"barszek\"\n    ],\n    \"secretKey\": \"9tOMTK\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/ads/update",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"ads",
+						"update"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update request forbidden",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": 1,\n    \"address\": \"Test address\",\n    \"description\": \"Test description\",\n    \"price\": 4500,\n    \"createdDate\": \"2022-09-30T13:50:33.447944\",\n    \"secretKey\": \"OE7l5z\",\n    \"tags\": [],\n    \"expirationDate\": null\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/ads/update",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"ads",
+						"update"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
