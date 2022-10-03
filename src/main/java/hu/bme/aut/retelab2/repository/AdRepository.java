@@ -38,4 +38,10 @@ public class AdRepository {
             return em.merge(ad);
         } else throw new NonTransientDataAccessException("You have entered an invalid secret key"){};
     }
+
+    public List<Ad> findByTag(String tag) {
+        List<Ad> resultList = em.createQuery("SELECT a FROM Ad a JOIN a.tags t WHERE t = LOWER(?1)", Ad.class).setParameter(1, tag).getResultList();
+        for (Ad ad : resultList) ad.setSecretKey(null);
+        return resultList;
+    }
 }
